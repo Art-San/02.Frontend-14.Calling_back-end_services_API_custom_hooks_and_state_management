@@ -15,6 +15,7 @@ const QualitiesListPage = () => {
         }
          loadData() 
       }, []) 
+      
     // выдал следующую ошибку
     // How To Fix The "useEffect must not return anything besides a function" Warning
     // решение https://isotropic.co/how-to-fix-the-useeffect-must-not-return-anything-besides-a-function-warning/
