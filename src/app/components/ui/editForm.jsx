@@ -3,14 +3,15 @@ import SelectField from "../common/form/selectField";
 import TextField from "../common/form/textField";
 import colors from "../../constants/colors.json";
 
-const EditForm = () => {
-    const [form, setForm] = useState({});
+const EditForm = ({ data, onSubmit }) => {
+    console.log('data', data)
+    const [form, setForm] = useState(data || {});
     const handeleSubmit = (e) => {
         e.preventDefault();
         console.log(form);
+        onSubmit(form)
     };
     const handleChange = (target) => {
-        console.log(target);
         setForm((prevState) => ({
             ...prevState,
             [target.name]: target.value,
