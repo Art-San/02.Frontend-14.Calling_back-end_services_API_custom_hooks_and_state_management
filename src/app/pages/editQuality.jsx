@@ -1,23 +1,7 @@
-// import httpService from "httpService";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import EditForm from "../components/ui/editForm";
 import httpService from '../services/http.service'
-// response - ответ от сервера
-// httpService.interceptors.response.use(
-//     (res) => res,
-//     function(error) {
-//         const expectedErrors = 
-//             error.response &&
-//             error.response.status >= 400 &&
-//             error.response.status < 500
-
-//         if (!expectedErrors) {
-//             console.log('unexpected error')
-//         }
-//         return Promise.reject(error)
-// })
-
 
 const EditQualityPage = () => {
     const [quality, setQuality] = useState(null)
