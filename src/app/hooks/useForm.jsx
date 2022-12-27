@@ -1,5 +1,5 @@
 import { useState } from "react"
-
+// это из следующего урока 16 кастомные хуки
 const useForm = (initialState = {}, onSubmit) => {
     const [form, setForm] = useState(initialState);
     const handeleSubmit = (e) => {

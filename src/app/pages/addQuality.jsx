@@ -1,6 +1,5 @@
 import React from "react";
-// import CreateForm from "../components/ui/createForm";
-import QualityForm from "../components/ui/qualityForm";
+import CreateForm from "../components/ui/createForm";
 const AddQualityPage = () => {
     const handleSubmit = (data) => {
         console.log('data', data)
@@ -9,7 +8,7 @@ const AddQualityPage = () => {
     return (
         <>
             <h1>Add Quality</h1>
-            <QualityForm onSubmit={handleSubmit}/>
+            <CreateForm onSubmit={handleSubmit}/>
         </>
     );
 };
