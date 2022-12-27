@@ -1,4 +1,5 @@
 import { useState } from "react"
+// useForm $ QualityForm вместо CreateForm и EditForm
 
 const useForm = (initialState = {}, onSubmit) => {
     const [form, setForm] = useState(initialState);
