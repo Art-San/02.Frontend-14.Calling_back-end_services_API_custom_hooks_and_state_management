@@ -23,6 +23,7 @@ const QualitiesListPage = () => {
     return (
         <>
             <h1>Qualitites List Page</h1>
+            <div>🎉⭐️👍✅🚚🚛</div>
             <QualitiesTable
                 onDelete={handleDelete}
                 onEdit={handleEdit}
