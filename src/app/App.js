@@ -19,16 +19,17 @@ function App() {
         <div className='App'>
             <NavBar routes={routes} />
             <QualitiesProvider>
-                <Container>
-                    <Switch>
-                        {getRoutes(routes)}
-                        <Redirect to='/' />
-                    </Switch>
-                </Container>
+                    <Container>
+                        <Switch>
+                            {getRoutes(routes)}
+                            <Redirect to='/' />
+                        </Switch>
+                    </Container>
             </QualitiesProvider>
             <ToastContainer/>
         </div>
     );
 }
+
 
 export default App;
