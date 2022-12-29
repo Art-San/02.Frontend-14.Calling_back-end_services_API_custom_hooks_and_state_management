@@ -1,6 +1,9 @@
 import httpService from "./http.service"
 const qualityEndpoint = 'quality/'
-
+// put - обновление
+// get + id - получение одного
+// get - получение всех
+// post - создание нового
 const qualityService = {
     update: async (id, content) => {
         const { data } = await httpService.put(
@@ -16,7 +19,11 @@ const qualityService = {
     fetchAll: async () => {
         const { data } = await httpService.get(qualityEndpoint)
         return data
-    }
+    },
+    create: async (content) => {
+        const { data } = await httpService.post(qualityEndpoint, content)
+        return data
+    }  
 }
 
 export default qualityService
