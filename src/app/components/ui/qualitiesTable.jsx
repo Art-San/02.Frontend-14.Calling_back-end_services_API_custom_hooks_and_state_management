@@ -1,6 +1,7 @@
 import React from "react";
 import Table from "../common/table";
 const QualitiesTable = ({ data, onEdit, onDelete }) => {
+    console.log('data в табл', data)
     const columns = {
         name: {
             path: "name",
