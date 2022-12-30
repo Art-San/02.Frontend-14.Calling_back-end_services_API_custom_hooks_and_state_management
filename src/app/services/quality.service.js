@@ -25,7 +25,7 @@ const qualityService = {
         return data
     },
     delete: async (id) => {
-        const { data } = await httpService.delete(qualityEndpoint + id)
+        const { data } = await httpService.delete(qualityEndpoint + id + 'fgg') // + 'fgg' добавленно для ошибки
         return data
     }
 }

@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
+import { toast } from "react-toastify"
 import qualityService from "../services/quality.service"
 
 const QualitiesContext = React.createContext()
@@ -11,6 +12,7 @@ export const QualitiesProvider = ({ children }) => {
     const [qualities, setQualities] = useState([])
     const [error, setError] = useState(null)
     const [isLoading, setloading] = useState(true)
+    const prevState = useRef()   // Оптимистическое
 
     useEffect(() => {
         const getQualities = async () => {
@@ -58,16 +60,22 @@ export const QualitiesProvider = ({ children }) => {
     }
 
     const deleteQuality = async (id) => {
+        prevState.current = qualities                                       // Оптимистическое
+        setQualities((prevState) => {                                       // Оптимистическое
+            return prevState.filter(item => item._id !== id)
+         })
         try {
-            const { content } = await qualityService.delete(id)
-            console.log(('content', content))
-            setQualities((prevState) => {
-               return prevState.filter(item => item._id !== content._id)
-            })
-            return content
+            await qualityService.delete(id)                                 // Оптимистическое
+            // const { content } = await qualityService.delete(id)          // Пессиместическое
+            // setQualities((prevState) => {                                // Пессиместическое
+            //    return prevState.filter(item => item._id !== content._id)
+            // })
+            // return content кажись это не нужно сдесь // Пессиместическое
         } catch (error) {
             const { message } = error.response.data
+            toast('Object not deleted')                                     // Оптимистическое
             setError(message)
+            setQualities(prevState.current)                                 // Оптимистическое
         }
     }
    return (
@@ -76,3 +84,6 @@ export const QualitiesProvider = ({ children }) => {
         </QualitiesContext.Provider>
     )
 }
+
+// Пессиместическое
+// Оптимистическое
