@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import qualityService from "../services/quality.service"
 
@@ -12,7 +12,6 @@ export const QualitiesProvider = ({ children }) => {
     const [qualities, setQualities] = useState([])
     const [error, setError] = useState(null)
     const [isLoading, setloading] = useState(true)
-    const prevState = useRef()   // Оптимистическое
 
     useEffect(() => {
         const getQualities = async () => {
@@ -21,8 +20,7 @@ export const QualitiesProvider = ({ children }) => {
                 setQualities(content)
                 setloading(false)
             } catch (error) {
-                const { message } = error.response.data
-              setError(message)  
+                errorCatcher(error) 
             }
         }
         getQualities()
@@ -44,8 +42,7 @@ export const QualitiesProvider = ({ children }) => {
             )
             return content  
         } catch (error) {
-            const { message } = error.response.data
-            setError(message)
+            errorCatcher(error)
         }
     }
     const addQuality = async (data) => {
@@ -54,30 +51,30 @@ export const QualitiesProvider = ({ children }) => {
              setQualities((prevState) => [...prevState, content])
              return content
         } catch (error) {
-            const { message } = error.response.data
-            setError(message)
+            errorCatcher(error)
         }
     }
 
     const deleteQuality = async (id) => {
-        prevState.current = qualities                                       // Оптимистическое
-        setQualities((prevState) => {                                       // Оптимистическое
-            return prevState.filter(item => item._id !== id)
-         })
         try {
-            await qualityService.delete(id)                                 // Оптимистическое
-            // const { content } = await qualityService.delete(id)          // Пессиместическое
-            // setQualities((prevState) => {                                // Пессиместическое
-            //    return prevState.filter(item => item._id !== content._id)
-            // })
-            // return content кажись это не нужно сдесь // Пессиместическое
+            const { content } = await qualityService.delete(id)
+            setQualities((prevState) => {               
+               return prevState.filter(item => item._id !== content._id)
+            })
         } catch (error) {
-            const { message } = error.response.data
-            toast('Object not deleted')                                     // Оптимистическое
-            setError(message)
-            setQualities(prevState.current)                                 // Оптимистическое
+            errorCatcher(error)
         }
     }
+    function errorCatcher(error) {
+        const { message } = error.response.data
+        setError(message)
+    }
+    useEffect(() => {
+        if (error !== null) {
+            toast(error)
+            setError(null)
+        }
+    }, [error])
    return (
         <QualitiesContext.Provider value={{qualities, getQuality, updateQuality, addQuality, deleteQuality}}>
             {!isLoading ? children : <h1>Qualities Loading...</h1>}
@@ -85,5 +82,3 @@ export const QualitiesProvider = ({ children }) => {
     )
 }
 
-// Пессиместическое
-// Оптимистическое
