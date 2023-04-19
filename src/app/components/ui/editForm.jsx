@@ -1,40 +1,41 @@
-import React, { useState } from "react";
-import SelectField from "../common/form/selectField";
-import TextField from "../common/form/textField";
-import colors from "../../constants/colors.json";
+import React, { useState } from 'react'
+import SelectField from '../common/form/selectField'
+import TextField from '../common/form/textField'
+import colors from '../../constants/colors.json'
 
 const EditForm = ({ data, onSubmit }) => {
+    // Создание новых данных
     console.log('data', data)
-    const [form, setForm] = useState(data || {});
+    const [form, setForm] = useState(data || {}) // Создание новых данных
     const handeleSubmit = (e) => {
-        e.preventDefault();
-        console.log(form);
-        onSubmit(form)
-    };
+        e.preventDefault()
+        console.log(form)
+        onSubmit(form) // Создание новых данных
+    }
     const handleChange = (target) => {
         setForm((prevState) => ({
             ...prevState,
-            [target.name]: target.value,
-        }));
-    };
+            [target.name]: target.value
+        }))
+    }
     return (
         <form onSubmit={handeleSubmit}>
             <TextField
-                label='Наименование'
-                name='name'
+                label="Наименование"
+                name="name"
                 onChange={handleChange}
-                value={form.name || ""}
+                value={form.name || ''}
             />
             <SelectField
-                label='Цвет'
-                name='color'
+                label="Цвет"
+                name="color"
                 options={colors}
                 onChange={handleChange}
-                value={form.color || ""}
+                value={form.color || ''}
             />
-            <button className='btn btn-primary'>Submit</button>
+            <button className="btn btn-primary">Submit</button>
         </form>
-    );
-};
+    )
+}
 
-export default EditForm;
+export default EditForm
