@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios from 'axios'
 import logger from './log.service'
 import { toast } from 'react-toastify'
-import config from '../config.json'
+import config from '../config.json' // Comments are not permitted in JSON
 
-axios.defaults.baseURL = config.apiEndpoint
+axios.defaults.baseURL = config.apiEndpoint // Comments are not permitted in JSON
 // response - ответ от сервера
 axios.interceptors.response.use(
     (res) => res,
-    function(error) {
-        const expectedErrors = 
+    function (error) {
+        const expectedErrors =
             error.response &&
             error.response.status >= 400 &&
             error.response.status < 500
@@ -18,13 +18,13 @@ axios.interceptors.response.use(
             toast.error('Somthing was wrong. Try it leter')
         }
         return Promise.reject(error)
-})
+    }
+)
 const httpService = {
     get: axios.get,
     post: axios.post,
     put: axios.put,
-    delete: axios.delete,
+    delete: axios.delete
 }
 
 export default httpService
-
