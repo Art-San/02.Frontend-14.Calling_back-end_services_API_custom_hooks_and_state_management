@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react"
-import qualityService from "../services/quality.service"
+import React, { useContext, useEffect, useState } from 'react'
+import qualityService from '../services/quality.service'
 
 const QualitiesContext = React.createContext()
 
@@ -8,10 +8,12 @@ export const useQualities = () => {
 }
 
 export const QualitiesProvider = ({ children }) => {
-    const [qualities, setQualities] = useState([])
-    const [error, setError] = useState(null)
-    const [isLoading, setloading] = useState(true)
+    const [qualities, setQualities] = useState([]) // useQualities
+    const [error, setError] = useState(null) // useQualities
+    console.log(error)
+    const [isLoading, setloading] = useState(true) // useQualities
     useEffect(() => {
+        // useQualities
         const getQualities = async () => {
             try {
                 const { content } = await qualityService.fetchAll()
@@ -19,15 +21,15 @@ export const QualitiesProvider = ({ children }) => {
                 setloading(false)
             } catch (error) {
                 const { message } = error.response.data
-              setError(message)  
+                setError(message)
             }
         }
         getQualities()
     }, [])
-   return (
-        <QualitiesContext.Provider value={{qualities, isLoading}}>
+    return (
+        <QualitiesContext.Provider value={{ qualities, isLoading }}>
             {!isLoading ? children : <h1>Qualities Loading...</h1>}
-        {children}
+            {children}
         </QualitiesContext.Provider>
     )
 }
