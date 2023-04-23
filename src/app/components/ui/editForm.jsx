@@ -1,30 +1,30 @@
-import React from "react";
-import SelectField from "../common/form/selectField";
-import TextField from "../common/form/textField";
-import colors from "../../constants/colors.json";
-import useForm from "../../hooks/useForm";
+import React from 'react'
+import SelectField from '../common/form/selectField'
+import TextField from '../common/form/textField'
+import colors from '../../constants/colors.json'
+import useForm from '../../hooks/useForm'
 
 const EditForm = ({ data, onSubmit }) => {
-    const {form, handeleSubmit, handleChange} = useForm(data, onSubmit)
+    const { form, handeleSubmit, handleChange } = useForm(data, onSubmit) // Кастомные хуки. useForm
 
     return (
         <form onSubmit={handeleSubmit}>
             <TextField
-                label='Наименование'
-                name='name'
+                label="Наименование"
+                name="name"
                 onChange={handleChange}
-                value={form.name || ""}
+                value={form.name || ''}
             />
             <SelectField
-                label='Цвет'
-                name='color'
+                label="Цвет"
+                name="color"
                 options={colors}
                 onChange={handleChange}
-                value={form.color || ""}
+                value={form.color || ''}
             />
-            <button className='btn btn-primary'>Submit</button>
+            <button className="btn btn-primary">Submit</button>
         </form>
-    );
-};
+    )
+}
 
-export default EditForm;
+export default EditForm
