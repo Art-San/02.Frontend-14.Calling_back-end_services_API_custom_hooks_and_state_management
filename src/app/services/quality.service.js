@@ -1,12 +1,14 @@
-import httpService from "./http.service"
+import httpService from './http.service'
 const qualityEndpoint = 'quality/'
+// Извлечение переиспользуемого паттерна Qualities Service
 
 const qualityService = {
     update: async (id, content) => {
-        const { data } = await httpService.put(
-            qualityEndpoint + id,
-            content
-        )
+        const { data } = await httpService.put(qualityEndpoint + id, content)
+        // const { data } = await httpService.put( // Для создании ошибки
+        //     qualityEndpoint + id + 'dfdfd',
+        //     content
+        // )
         return data
     },
     get: async (id) => {
