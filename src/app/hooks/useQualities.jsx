@@ -1,14 +1,14 @@
-import React, { useContext } from "react"
-
+import React, { useContext } from 'react'
+// Context
 const QualitiesContext = React.createContext()
 export const useQualities = () => {
     return useContext(QualitiesContext)
 }
-const qualities = [{_id: 1234, name: 'asdasd'}]
-export const QualitiesProvider = ({children}) => {
-   return (
+const qualities = [{ _id: 1234, name: 'asdasd' }]
+export const QualitiesProvider = ({ children }) => {
+    return (
         <QualitiesContext.Provider value={qualities}>
-        {children}
+            {children}
         </QualitiesContext.Provider>
     )
 }

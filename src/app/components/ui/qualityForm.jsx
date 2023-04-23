@@ -1,34 +1,32 @@
-import React from "react";
-import SelectField from "../common/form/selectField";
-import TextField from "../common/form/textField";
-import colors from "../../constants/colors.json";
-import useForm from "../../hooks/useForm";
-import { useQualities } from "../../hooks/useQualities";
-
+import React from 'react'
+import SelectField from '../common/form/selectField'
+import TextField from '../common/form/textField'
+import colors from '../../constants/colors.json'
+import useForm from '../../hooks/useForm'
+import { useQualities } from '../../hooks/useQualities'
 
 const QualityForm = ({ onSubmit }) => {
-    const {form, handeleSubmit, handleChange} = useForm({}, onSubmit)
-    const data = useQualities()
+    const { form, handeleSubmit, handleChange } = useForm({}, onSubmit)
+    const data = useQualities() // Context
     console.log('data from form', data)
     return (
         <form onSubmit={handeleSubmit}>
             <TextField
-                label='Наименование'
-                name='name'
+                label="Наименование"
+                name="name"
                 onChange={handleChange}
-                value={form.name || ""}
+                value={form.name || ''}
             />
             <SelectField
-                label='Цвет'
-                name='color'
+                label="Цвет"
+                name="color"
                 options={colors}
                 onChange={handleChange}
-                value={form.color || ""}
+                value={form.color || ''}
             />
-            <button className='btn btn-primary'>Submit</button>
+            <button className="btn btn-primary">Submit</button>
         </form>
-    );
-};
-
+    )
+}
 
 export default QualityForm
