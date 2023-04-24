@@ -1,13 +1,15 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import QualityForm from "../components/ui/qualityForm";
-import { useQualities } from "../hooks/useQualities";
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import QualityForm from '../components/ui/qualityForm'
+import { useQualities } from '../hooks/useQualities'
 
 const EditQualityPage = () => {
     const id = useParams().id
-    
-    const { getQuality, updateQuality } = useQualities()
-    const quality = getQuality(id)
+
+    const { getQuality, updateQuality } = useQualities() // useQualities(). Обновление данных
+
+    const quality = getQuality(id) // useQualities(). Обновление данных
+
     const handleSubmit = (data) => {
         console.log('data', data)
         updateQuality(data)
@@ -16,9 +18,9 @@ const EditQualityPage = () => {
     return (
         <>
             <h1>Edit Quality Page</h1>{' '}
-           <QualityForm data={quality} onSubmit={handleSubmit}/>
+            <QualityForm data={quality} onSubmit={handleSubmit} />
         </>
-    );
-};
+    )
+}
 
-export default EditQualityPage;
+export default EditQualityPage
