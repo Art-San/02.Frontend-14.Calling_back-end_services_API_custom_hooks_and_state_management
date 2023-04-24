@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react"
-import { toast } from "react-toastify"
-import qualityService from "../services/quality.service"
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { toast } from 'react-toastify'
+import qualityService from '../services/quality.service'
 
 const QualitiesContext = React.createContext()
 
@@ -12,7 +12,7 @@ export const QualitiesProvider = ({ children }) => {
     const [qualities, setQualities] = useState([])
     const [error, setError] = useState(null)
     const [isLoading, setloading] = useState(true)
-    const prevState = useRef()   // Оптимистическое
+    const prevState = useRef() // Оптимистическое
 
     useEffect(() => {
         const getQualities = async () => {
@@ -22,7 +22,7 @@ export const QualitiesProvider = ({ children }) => {
                 setloading(false)
             } catch (error) {
                 const { message } = error.response.data
-              setError(message)  
+                setError(message)
             }
         }
         getQualities()
@@ -31,10 +31,10 @@ export const QualitiesProvider = ({ children }) => {
     const getQuality = (id) => {
         return qualities.find((q) => q._id === id)
     }
-    const updateQuality = async ({_id: id, ...data}) => {
+    const updateQuality = async ({ _id: id, ...data }) => {
         try {
             const { content } = await qualityService.update(id, data)
-            setQualities(prevState => 
+            setQualities((prevState) =>
                 prevState.map((item) => {
                     if (item._id === content._id) {
                         return content
@@ -42,7 +42,7 @@ export const QualitiesProvider = ({ children }) => {
                     return item
                 })
             )
-            return content  
+            return content
         } catch (error) {
             const { message } = error.response.data
             setError(message)
@@ -51,21 +51,22 @@ export const QualitiesProvider = ({ children }) => {
     const addQuality = async (data) => {
         try {
             const { content } = await qualityService.create(data)
-             setQualities((prevState) => [...prevState, content])
-             return content
+            setQualities((prevState) => [...prevState, content])
+            return content
         } catch (error) {
             const { message } = error.response.data
             setError(message)
         }
     }
-
+    //оптимистические обновления
     const deleteQuality = async (id) => {
-        prevState.current = qualities                                       // Оптимистическое
-        setQualities((prevState) => {                                       // Оптимистическое
-            return prevState.filter(item => item._id !== id)
-         })
+        prevState.current = qualities // Оптимистическое
+        setQualities((prevState) => {
+            // Оптимистическое
+            return prevState.filter((item) => item._id !== id)
+        })
         try {
-            await qualityService.delete(id)                                 // Оптимистическое
+            await qualityService.delete(id) // Оптимистическое
             // const { content } = await qualityService.delete(id)          // Пессиместическое
             // setQualities((prevState) => {                                // Пессиместическое
             //    return prevState.filter(item => item._id !== content._id)
@@ -73,13 +74,21 @@ export const QualitiesProvider = ({ children }) => {
             // return content кажись это не нужно сдесь // Пессиместическое
         } catch (error) {
             const { message } = error.response.data
-            toast('Object not deleted')                                     // Оптимистическое
+            toast('Object not deleted') // Оптимистическое
             setError(message)
-            setQualities(prevState.current)                                 // Оптимистическое
+            setQualities(prevState.current) // Оптимистическое
         }
     }
-   return (
-        <QualitiesContext.Provider value={{qualities, getQuality, updateQuality, addQuality, deleteQuality}}>
+    return (
+        <QualitiesContext.Provider
+            value={{
+                qualities,
+                getQuality,
+                updateQuality,
+                addQuality,
+                deleteQuality
+            }}
+        >
             {!isLoading ? children : <h1>Qualities Loading...</h1>}
         </QualitiesContext.Provider>
     )
