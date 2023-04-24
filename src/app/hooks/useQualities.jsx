@@ -29,7 +29,9 @@ export const QualitiesProvider = ({ children }) => {
     return (
         <QualitiesContext.Provider value={{ qualities, isLoading }}>
             {!isLoading ? children : <h1>Qualities Loading...</h1>}
-            {children}
+            {
+                children // ошибка, далее будет убранна
+            }
         </QualitiesContext.Provider>
     )
 }
