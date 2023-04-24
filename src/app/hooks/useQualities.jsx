@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from "react"
-import { toast } from "react-toastify"
-import qualityService from "../services/quality.service"
+import React, { useContext, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import qualityService from '../services/quality.service'
 
 const QualitiesContext = React.createContext()
 
@@ -20,7 +20,7 @@ export const QualitiesProvider = ({ children }) => {
                 setQualities(content)
                 setloading(false)
             } catch (error) {
-                errorCatcher(error) 
+                errorCatcher(error)
             }
         }
         getQualities()
@@ -29,10 +29,10 @@ export const QualitiesProvider = ({ children }) => {
     const getQuality = (id) => {
         return qualities.find((q) => q._id === id)
     }
-    const updateQuality = async ({_id: id, ...data}) => {
+    const updateQuality = async ({ _id: id, ...data }) => {
         try {
             const { content } = await qualityService.update(id, data)
-            setQualities(prevState => 
+            setQualities((prevState) =>
                 prevState.map((item) => {
                     if (item._id === content._id) {
                         return content
@@ -40,7 +40,7 @@ export const QualitiesProvider = ({ children }) => {
                     return item
                 })
             )
-            return content  
+            return content
         } catch (error) {
             errorCatcher(error)
         }
@@ -48,8 +48,8 @@ export const QualitiesProvider = ({ children }) => {
     const addQuality = async (data) => {
         try {
             const { content } = await qualityService.create(data)
-             setQualities((prevState) => [...prevState, content])
-             return content
+            setQualities((prevState) => [...prevState, content])
+            return content
         } catch (error) {
             errorCatcher(error)
         }
@@ -58,27 +58,36 @@ export const QualitiesProvider = ({ children }) => {
     const deleteQuality = async (id) => {
         try {
             const { content } = await qualityService.delete(id)
-            setQualities((prevState) => {               
-               return prevState.filter(item => item._id !== content._id)
+            setQualities((prevState) => {
+                return prevState.filter((item) => item._id !== content._id)
             })
         } catch (error) {
             errorCatcher(error)
         }
     }
     function errorCatcher(error) {
+        // Глобальная обработка ошибок
         const { message } = error.response.data
         setError(message)
     }
     useEffect(() => {
+        // Глобальная обработка ошибок
         if (error !== null) {
             toast(error)
             setError(null)
         }
     }, [error])
-   return (
-        <QualitiesContext.Provider value={{qualities, getQuality, updateQuality, addQuality, deleteQuality}}>
+    return (
+        <QualitiesContext.Provider
+            value={{
+                qualities,
+                getQuality,
+                updateQuality,
+                addQuality,
+                deleteQuality
+            }}
+        >
             {!isLoading ? children : <h1>Qualities Loading...</h1>}
         </QualitiesContext.Provider>
     )
 }
-
