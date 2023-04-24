@@ -1,4 +1,4 @@
-import httpService from "./http.service"
+import httpService from './http.service'
 const qualityEndpoint = 'quality/'
 // put - обновление
 // get + id - получение одного
@@ -6,10 +6,7 @@ const qualityEndpoint = 'quality/'
 // post - создание нового
 const qualityService = {
     update: async (id, content) => {
-        const { data } = await httpService.put(
-            qualityEndpoint + id,
-            content
-        )
+        const { data } = await httpService.put(qualityEndpoint + id, content)
         return data
     },
     get: async (id) => {
@@ -25,7 +22,7 @@ const qualityService = {
         return data
     },
     delete: async (id) => {
-        const { data } = await httpService.delete(qualityEndpoint + id)
+        const { data } = await httpService.delete(qualityEndpoint + id) // Удаление данных
         return data
     }
 }

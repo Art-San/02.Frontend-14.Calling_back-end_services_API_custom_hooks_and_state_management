@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react"
-import qualityService from "../services/quality.service"
+import React, { useContext, useEffect, useState } from 'react'
+import qualityService from '../services/quality.service'
 
 const QualitiesContext = React.createContext()
 
@@ -20,7 +20,7 @@ export const QualitiesProvider = ({ children }) => {
                 setloading(false)
             } catch (error) {
                 const { message } = error.response.data
-              setError(message)  
+                setError(message)
             }
         }
         getQualities()
@@ -29,10 +29,10 @@ export const QualitiesProvider = ({ children }) => {
     const getQuality = (id) => {
         return qualities.find((q) => q._id === id)
     }
-    const updateQuality = async ({_id: id, ...data}) => {
+    const updateQuality = async ({ _id: id, ...data }) => {
         try {
             const { content } = await qualityService.update(id, data)
-            setQualities(prevState => 
+            setQualities((prevState) =>
                 prevState.map((item) => {
                     if (item._id === content._id) {
                         return content
@@ -40,7 +40,7 @@ export const QualitiesProvider = ({ children }) => {
                     return item
                 })
             )
-            return content  
+            return content
         } catch (error) {
             const { message } = error.response.data
             setError(message)
@@ -49,8 +49,8 @@ export const QualitiesProvider = ({ children }) => {
     const addQuality = async (data) => {
         try {
             const { content } = await qualityService.create(data)
-             setQualities((prevState) => [...prevState, content])
-             return content
+            setQualities((prevState) => [...prevState, content])
+            return content
         } catch (error) {
             const { message } = error.response.data
             setError(message)
@@ -58,11 +58,12 @@ export const QualitiesProvider = ({ children }) => {
     }
 
     const deleteQuality = async (id) => {
+        // Удаление данных
         try {
             const { content } = await qualityService.delete(id)
             console.log(('content', content))
             setQualities((prevState) => {
-               return prevState.filter(item => item._id !== content._id)
+                return prevState.filter((item) => item._id !== content._id)
             })
             return content
         } catch (error) {
@@ -70,8 +71,16 @@ export const QualitiesProvider = ({ children }) => {
             setError(message)
         }
     }
-   return (
-        <QualitiesContext.Provider value={{qualities, getQuality, updateQuality, addQuality, deleteQuality}}>
+    return (
+        <QualitiesContext.Provider
+            value={{
+                qualities,
+                getQuality,
+                updateQuality,
+                addQuality,
+                deleteQuality
+            }}
+        >
             {!isLoading ? children : <h1>Qualities Loading...</h1>}
         </QualitiesContext.Provider>
     )
